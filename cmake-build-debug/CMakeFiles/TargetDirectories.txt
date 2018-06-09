@@ -1,3 +1,0 @@
-/Users/johnilquezada/hackathon/data-storage/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/johnilquezada/hackathon/data-storage/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/johnilquezada/hackathon/data-storage/cmake-build-debug/CMakeFiles/datastorage.dir

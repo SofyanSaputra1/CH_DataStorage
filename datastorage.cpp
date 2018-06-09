@@ -89,7 +89,7 @@ class CHDataStorage : public eosio::contract {
       return iterator != medical_providers.end();
     }
 
-    //@abi table profiles i64
+    //@abi table profile i64
     struct profile {
         profile(
                 account_name owner = account_name(),
@@ -114,7 +114,7 @@ class CHDataStorage : public eosio::contract {
 
     typedef eosio::multi_index< N(profile), profile> profile_index;
 
-    //@abi table medical_providers i64
+    //@abi table mprv i64
     struct mprv {
         // The eos owner account_name of the account in this contract
         account_name mpName;
@@ -133,7 +133,7 @@ class CHDataStorage : public eosio::contract {
 
     typedef eosio::multi_index< N(mprv), mprv> medical_provider_index;
 
-    //@abi table approved_providers i64
+    //@abi table apprvMp i64
     struct apprvMp {
         account_name mprovider;
         account_name patient;

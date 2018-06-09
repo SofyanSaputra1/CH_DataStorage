@@ -56,7 +56,7 @@ class CHDataTransaction : public eosio::contract {
 		EOSLIB_SERIALIZE( patient_data, (data_hash)(patient_name)(mp)(data_type)(deltaToken)(timestamp) )
     };
 
-    typedef eosio::multi_index< N(patient_data), patient_data> patient_data_index;
+    typedef eosio::multi_index< N(patientdata), patient_data> patient_data_index;
 
     patient_data_index patients_data;
 };

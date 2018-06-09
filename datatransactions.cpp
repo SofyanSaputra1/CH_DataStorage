@@ -40,7 +40,7 @@ class CHDataTransaction : public eosio::contract {
     }
 
   private:
-    //@abi table profiles i64
+    //@abi table patientdata i64
     struct patient_data {
 
         // The eos owner account_name of the account in this contract

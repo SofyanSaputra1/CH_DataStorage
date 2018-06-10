@@ -24,52 +24,68 @@ class CHVotingContract : public eosio::contract {
       mp_votes(_self, _self){}
 	
     //@abi action
-    void submitform(account_name researchid, string formdata, uint64_t acceptedPercentage, uint64_t count) {
+    void submitform(account_name researchid, string formdata, uint64_t acceptedpercentage, uint64_t count) {
       account_name owner = _self;
 
-      // Temporarily remove this
       require_auth(owner);
 
-      eosio_assert(accessor == DELEGATED_MP || accessor == DELEGATED_CH, "Accessor must be a known accessor constant");
-
-      eosio_assert(!hasProfile(owner), "Profile already exists");
-
-      // Store new profile
-      profiles.emplace(_self, [&](auto& profile){
-        profile.owner = owner;
-        profile.confirmBeforeMPCanStore = confirmBeforeMPCanStore;
-        profile.autoQuery = autoQuery;
-        profile.accessor = accessor;
+      // Store new research form
+      researchforms.emplace(_self, [&](auto& researchform){
+        researchform.researchid = researchid;
+        researchform.formdata = formdata;
+        researchform.acceptedpercentage = acceptedpercentage;
+        researchform.count = count;
       });
     }
 
     //@abi action
-    void createmp(account_name mprovider, string mpId, string firstName, string lastName) {
-      // Hash the id
-      checksum256 mpIdHash;
-      sha256((char *) mpId.c_str(), sizeof(mpId), &mpIdHash);
-
+    void vote(account_name mp, account_name researchid, uint64_t stakecoins) {
       // Store new MP
-      medical_providers.emplace(_self, [&](auto& mp){
-          mp.mpName = _self;
-          mp.mpId = mpIdHash;
-          mp.firstName = firstName;
-          mp.lastName = lastName;
+      mpvotes.emplace(_self, [&](auto& mpvote){
+          mpvote.mp = mp;
+          mpvote.researchid = researchid;
+          mpvote.stakedcoins = stakedcoins;
       });
     }
 
     //@abi action
-    void addtrustedmp(account_name mp) {
-      require_auth(mp);
-
-      eosio_assert(!hasTrustedMp(mp), "Trusted MP already exists");
-
-      // Store new trusted MP
-      approved_providers.emplace(_self, [&](auto& approved_provider){
-          approved_provider.patient = _self;
-          approved_provider.mprovider = mp;
-      });
+    void votedeltas(account_name researchid) {
+		auto iterator = mpvotes.find(researchid).begin();
+		uint64_t totalstake;
+		uint64_t yaystake;
+		for(auto it = iterator; it!=iterator.end(); it++)
+		{
+			if(*it.stakedcoins>0)
+			{
+				yaystake+=*it.stakedcoins;
+			}
+			totalstake+=*it.stakedcoins;
+		}
+		uint64_t percentage=(uint64_t)((yaystake*100)/totalstake);
+		auto researchform = researchforms.find(researchid);
+		researchforms.modify(researchform, N(testaccount),[&]( auto& rform)
+		{
+			rform.acceptedpercentage = percentage;
+		});
+		auto researchform = researchforms.find(researchid);
+		researchforms.modify(researchform, N(testaccount),[&]( auto& rform)
+		{
+			rform.acceptedpercentage = percentage;
+		});
+		if(percentage>=66)
+		{
+			//TODO add functionality here
+		}
     }
+	
+	//@abi action
+    void optin(account_name researchid,string optedhash) {
+		opteddatasets.emplace(_self, [&](auto& optedataset)
+		{
+          opteddataset.researchid = researchid;
+          opteddataset.optedhash = optedhash;
+      	});	
+	}
 
   private:
 
@@ -85,65 +101,53 @@ class CHVotingContract : public eosio::contract {
       return iterator != medical_providers.end();
     }
 
-    //@abi table profiles i64
-    struct profile {
-        profile(
-                account_name owner = account_name(),
-                bool confirmBeforeMPCanStore = false,
-                bool autoQuery = false,
-                uint8_t accessor = 4
-        ):owner(owner),
-          confirmBeforeMPCanStore(confirmBeforeMPCanStore),
-          autoQuery(autoQuery),
-          accessor(accessor){}
+    //@abi table researchforms i64
+    struct researchform {
+        account_name researchid;
 
-        // The eos owner account_name of the account in this contract
-        account_name owner;
-        bool confirmBeforeMPCanStore;
-        bool autoQuery;
-        uint8_t accessor;
+        string formdata;
 
-        uint64_t primary_key()const { return owner; }
+        uint64_t acceptedpercentage;
+		
+		uint64_t count;
 
-        EOSLIB_SERIALIZE( profile, (owner)(confirmBeforeMPCanStore)(autoQuery)(accessor) )
+        uint64_t primary_key()const { return researchid; }
+
+        EOSLIB_SERIALIZE( researchform, (researchid)(formdata)(acceptedpercentage)(count) )
     };
 
-    typedef eosio::multi_index< N(profile), profile> profile_index;
+    typedef eosio::multi_index< N(researchforms), researchform> research_form_index;
 
-    //@abi table medical_providers i64
-    struct mprv {
-        // The eos owner account_name of the account in this contract
-        account_name mpName;
+    //@abi table mpvotes i64
+    struct mpvotes {
+        account_name mp;
+        account_name researchid;
+		
+		uint64_t stakedcoins;
 
-        // Some stringy id to represent the medical provider
-        checksum256 mpId;
+        uint64_t primary_key()const { return researchid; }
+        uint64_t secondary_key()const { return mp; }
 
-        string firstName;
-
-        string lastName;
-
-        uint64_t primary_key()const { return mpName; }
-
-        EOSLIB_SERIALIZE( mprv, (mpName)(mpId)(firstName)(lastName) )
+        EOSLIB_SERIALIZE( mpvotes, (mp)(researchid) )
     };
 
-    typedef eosio::multi_index< N(mprv), mprv> medical_provider_index;
+    typedef eosio::multi_index< N(mpvotes), mpvotes> mp_votes_index;
 
-    //@abi table approved_providers i64
-    struct apprvMp {
-        account_name mprovider;
-        account_name patient;
+	
+    //@abi table opteddata i64
+    struct opteddata {
+        account_name researchid;
+        string optedhash;
+        uint64_t primary_key()const { return researchid; }
 
-        uint64_t primary_key()const { return mprovider; }
-
-        EOSLIB_SERIALIZE( apprvMp, (mprovider)(patient) )
+        EOSLIB_SERIALIZE( opteddata, (researchid)(optedhash) )
     };
 
-    typedef eosio::multi_index< N(apprvMp), apprvMp> approved_providers_index;
-
-    profile_index profiles;
-    medical_provider_index medical_providers;
-    approved_providers_index approved_providers;
+    typedef eosio::multi_index< N(opteddata), opteddata> opteddata_index;
+	
+    research_form_index researchforms;
+    mp_votes_index mpvotes;
+	opteddata_index opteddatasets;
 };
 
-EOSIO_ABI(CHDataStorage,(createprofile) (createmp) (addtrustedmp))
+EOSIO_ABI(CHVotingContract,(submitform) (vote) (checkvotedeltas))

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon.png">
+    <title>Collective Health</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+
+    <script src="js/eosjs.js"></script>
+    <script src="js/blockchain.js"></script>
+    <link href="css/lib/calendar2/semantic.ui.min.css" rel="stylesheet">
+    <link href="css/lib/calendar2/pignose.calendar.min.css" rel="stylesheet">
+    <link href="css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="css/helper.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
+    <!--[if lt IE 9]>
+    <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header fix-sidebar">
+    <!-- Preloader - style you can find in spinners.css -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
+    <!-- Main wrapper  -->
+    <div id="main-wrapper">
+        <!-- header header  -->
+        <div class="header" style="width: 100%; text-align: center;">
+                <!-- Logo -->
+                <span class="align-self-center" style="display: flex; flex-direction: row; justify-content: center; align-items: center; ">
+                    <img src="assets/logo.png" style="text-align: center; margin-bottom: 2em; margin-top: 2em; "/> <h1 style="text-align: center; color:teal; font-weight: bold; font-size: 5em;">&nbspPatient Dashboard</h1> 
+                </span>
+                <!-- End Logo -->
+        </div>
+        <!-- End header header -->
+        <!-- Container fluid  -->
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="span2 col-lg-3">
+                    <!-- Current Medical Providers -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card" style="width:450px;">
+                                <div class="card-title">
+                                    <h4>Current Medical Providers</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive" style="min-height:350px; max-height:350px; ">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Organization</th>
+                                                    <th>Specialty</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+                                                    <td>Sofyan Saputra, MD</td>
+                                                    <td>John Hopkins</td>
+                                                    <td>Neurosurgery</td>
+                                                    <td><button class="btn-success">Remove</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Koby Stacey, OD</td>
+                                                    <td>Mayo Clinic</td>
+                                                    <td>Orthopedics</td>
+                                                    <td><button class="btn-success">Remove</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>John Abraham, DDS</td>
+                                                    <td>Cleveland Clinic</td>
+                                                    <td>Dentistry</td>
+                                                    <td><button class="btn-success">Remove</button></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Study History -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card" style="width:450px;">
+                                <div class="card-title">
+                                    <h4>Transaction History </h4>
+                                    <button type="button" class="btn btn-success btn-sm" style="float: right;" disabled>Balance: CHC 21,114.61</button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive" style="min-height:350px; max-height:350px;">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Tx Type</th>
+                                                    <th>Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>6/10/18</td>
+                                                    <td>Study Reward</td>
+                                                    <td>CHC 745.12</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>6/1/18</td>
+                                                    <td>Withdrawal</td>
+                                                    <td>CHC 156.34</td>
+                                                </tr>
+                                                <tr>
+                                                   <td>5/24/18</td>
+                                                    <td>Deposit</td>
+                                                    <td>CHC 237.5</td>
+                                                </tr>
+                                                <tr>
+                                                   <td>5/12/18</td>
+                                                    <td>Deposit</td>
+                                                    <td>CHC 7683</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5/10/18</td>
+                                                    <td>Study Reward</td>
+                                                    <td>CHC 546.34</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5/2/18</td>
+                                                    <td>Withdrawal</td>
+                                                    <td>CHC 65.2</td>
+                                                </tr>
+                                                <tr>
+                                                   <td>4/18/18</td>
+                                                    <td>Deposit</td>
+                                                    <td>CHC 1.23</td>
+                                                </tr>
+                                                <tr>
+                                                   <td>4/12/18</td>
+                                                    <td>Deposit</td>
+                                                    <td>CHC 45.2</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="span6 col-lg-5">
+                    <!-- Research Studies -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-title">
+                                <h4>Research Studies </h4>
+                            </div>
+                            <div class="recent-comment" style="height:820px; overflow-y: scroll;">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#"><img alt="..." src="assets/MayoClinic.png" class="media-object"></a>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <h4 class="media-heading">Phase 3 Trial of Ibrutinib plus Rituximab in Waldenström’s Macroglobulinemia</h4>
+                                                <p><b>Organization:</b> Mayo Clinic </p>
+                                                <p><b>Description:</b> We randomly assigned 150 symptomatic patients to receive ibrutinib plus rituximab or placebo plus rituximab. The primary end point was progression-free survival, as assessed by an independent review committee. Key secondary end points were response rates, sustained hematologic improvement from baseline, and safety. The mutational status of MYD88 and CXCR4 was assessed in bone marrow samples. </p>
+                                                <p><b>Patient Data Requested:</b> Heart Rate, High Blood Pressure</p>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <a href="./ResearcherDashboard.html?o=1"><button type="button" class="comment-date btn btn-success btn-md" style="color:white; float:right; margin-right: 3em;">Opt-In</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#"><img alt="..." src="assets/Harvard.png" class="media-object"></a>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <h4 class="media-heading">Five-Year Risk of Stroke after TIA or Minor Ischemic Stroke</h4>
+                                                <p><b>Organization:</b> Harvard Medical</p>
+                                                <p><b>Description:</b> We evaluated patients who had had a TIA or minor stroke within 7 days before enrollment in the registry. Among 61 sites that participated in the 1-year outcome study, we selected 42 sites that had follow-up data on more than 50% of their enrolled patients at 5 years. </p>
+                                                <p><b>Patient Data Requested:</b> Heart Rate, High Blood Pressure</p>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <button type="button" class="comment-date btn btn-success btn-md" style="color:white; float:right; margin-right: 3em;">Opt-In</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#"><img alt="..." src="assets/cleveland.jpg" class="media-object"></a>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <h4 class="media-heading">The Microbiome and Systemic Lupus Erythematosus</h4>
+                                                <p><b>Organization:</b> Cleveland Clinic </p>
+                                                <p><b>Description:</b> In an analysis of the 2015 Medicare Current Beneficiary Survey, we identified a substantial need for LTSS in the Medicare Advantage population. In 2015, approximately 36% of community-dwelling Medicare Advantage beneficiaries reported having difficulty with activities of daily living (ADLs) such as eating, bathing, dressing, toileting, walking across the room, and transferring in and out of bed. </p>
+                                                <p><b>Patient Data Requested:</b> Heart Rate, High Blood Pressure</p>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <button type="button" class="comment-date btn btn-success btn-md" style="color:white; float:right; margin-right: 3em;">Opt-In</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#"><img alt="..." src="assets/MGH.png" class="media-object"></a>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <h4 class="media-heading">Adjuvant Chemotherapy Guided by a 21-Gene Expression Assay </h4>
+                                                <p><b>Organization:</b> Massachussets General </p>
+                                                <p><b>Description:</b> We performed a prospective trial involving 10,273 women with hormone-receptor–positive, human epidermal growth factor receptor 2 (HER2)–negative, axillary node–negative breast cancer. Of the 9719 eligible patients with follow-up information, 6711 (69%) had a midrange recurrence score of 11 to 25 and were randomly assigned to receive either chemoendocrine therapy or endocrine therapy alone. </p>
+                                                <p><b>Patient Data Requested:</b> Heart Rate, High Blood Pressure</p>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <button type="button" class="comment-date btn btn-success btn-md" style="color:white; float:right; margin-right: 3em;">Opt-In</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="span6 col-lg-4"">
+                    <!-- MP Search -->
+                    <div class="card" style="height:890px; overflow-y: scroll; overflow-x: scroll;">
+                        <div class="card-body" >
+                            <h4 class="card-title">Search for Medical Providers</h4>
+                            <div class="table-responsive" >
+                                <table id="myTable" class="table table-bordered table-striped" style="height:650px; margin-right: 20px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Organization</th>
+                                            <th>Specialty</th>
+                                            <th>Add</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon, MD</td>
+                                            <td>Detroit Medical Center</td>
+                                            <td>Family Medicine</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters, DDS</td>
+                                            <td>Harvard Medical</td>
+                                            <td>Dentistry</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox, DO</td>
+                                            <td>John Hopkins</td>
+                                            <td>Osteopathy</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters, DDS</td>
+                                            <td>Harvard Medical</td>
+                                            <td>Dentistry</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox, DO</td>
+                                            <td>John Hopkins</td>
+                                            <td>Osteopathy</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters, DDS</td>
+                                            <td>Harvard Medical</td>
+                                            <td>Dentistry</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox, DO</td>
+                                            <td>John Hopkins</td>
+                                            <td>Osteopathy</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters, DDS</td>
+                                            <td>Harvard Medical</td>
+                                            <td>Dentistry</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox, DO</td>
+                                            <td>John Hopkins</td>
+                                            <td>Osteopathy</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters, DDS</td>
+                                            <td>Harvard Medical</td>
+                                            <td>Dentistry</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox, DO</td>
+                                            <td>John Hopkins</td>
+                                            <td>Osteopathy</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters, DDS</td>
+                                            <td>Harvard Medical</td>
+                                            <td>Dentistry</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox, DO</td>
+                                            <td>John Hopkins</td>
+                                            <td>Osteopathy</td>
+                                            <td><button class="btn-success">Add</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="row">
+                
+            </div>
+
+            <!-- End Page Content -->
+        </div>
+        <!-- End Container fluid  -->
+        <!-- footer -->
+        <footer class="footer"> © 2018 Collective Health</footer>
+        <!-- End footer -->
+        
+    </div>
+    <!-- End Wrapper -->
+    <!-- All Jquery -->
+    <script src="js/lib/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="js/lib/bootstrap/js/popper.min.js"></script>
+    <script src="js/lib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="js/jquery.slimscroll.js"></script>
+    <!--Menu sidebar -->
+    <script src="js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="js/lib/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+
+
+    <!-- Amchart -->
+     <script src="js/lib/morris-chart/raphael-min.js"></script>
+    <script src="js/lib/morris-chart/morris.js"></script>
+    <script src="js/lib/morris-chart/dashboard1-init.js"></script>
+
+
+	<script src="js/lib/calendar-2/moment.latest.min.js"></script>
+    <!-- scripit init-->
+    <script src="js/lib/calendar-2/semantic.ui.min.js"></script>
+    <!-- scripit init-->
+    <script src="js/lib/calendar-2/prism.min.js"></script>
+    <!-- scripit init-->
+    <script src="js/lib/calendar-2/pignose.calendar.min.js"></script>
+    <!-- scripit init-->
+    <script src="js/lib/calendar-2/pignose.init.js"></script>
+
+    <script src="js/lib/owl-carousel/owl.carousel.min.js"></script>
+    <script src="js/lib/owl-carousel/owl.carousel-init.js"></script>
+
+    <!-- scripit init-->
+
+    <script src="js/scripts.js"></script>
+
+    <!-- data tables-->
+    <script src="js/lib/datatables/datatables.min.js"></script>
+    <script src="js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script src="js/lib/datatables/datatables-init.js"></script>
+</body>
+
+</html>

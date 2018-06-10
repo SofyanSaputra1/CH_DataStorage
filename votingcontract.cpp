@@ -17,12 +17,16 @@ using eosio::print;
 using eosio::name;
 using std::string;
 
+int i =0;
+
 class CHVotingContract : public eosio::contract {
   public:
     CHVotingContract(account_name self) : contract(self),
       researchforms(_self, _self),
       mpvotes(_self, _self),
       opteddatasets(_self, _self){}
+
+
 	
     //@abi action
     void submitform(account_name researchid, string formdata, uint64_t acceptedpercentage, uint64_t count) {
@@ -47,6 +51,13 @@ class CHVotingContract : public eosio::contract {
           mpvote.researchid = researchid;
           mpvote.stakedcoins = stakedcoins;
       });
+
+      action(
+              permission_level{ _self, N(active) },
+              N(testaccount), N(votedeltas),
+              std::make_tuple(researchid)
+      ).send();
+     // votedeltas(researchid);
     }
 
     //@abi action
@@ -54,7 +65,7 @@ class CHVotingContract : public eosio::contract {
 			auto iterator = mpvotes.find(researchid);
 			uint64_t totalstake;
 			uint64_t yaystake;
-			for(auto it = iterator; it!=mpvotes.end(); it++)
+			for(auto it = iterator; it!=mpvotes.end(); ++it)
 			{
 				if(it->stakedcoins>0)
 				{
@@ -62,16 +73,19 @@ class CHVotingContract : public eosio::contract {
 				}
 				totalstake+=it->stakedcoins;
 			}
-			uint64_t percentage=(uint64_t)((yaystake*100)/totalstake);
-			auto researchform = researchforms.find(researchid);
-			researchforms.modify(researchform, N(testaccount),[&]( auto& rform)
-			{
-				rform.acceptedpercentage = percentage;
-			});
-			if(percentage>=66)
-			{
-				//TODO add functionality here
-			}
+
+      if (totalstake > 0) {
+        uint64_t percentage=(uint64_t)((yaystake*100)/totalstake);
+        auto researchform = researchforms.find(researchid);
+        researchforms.modify(researchform, N(testaccount),[&]( auto& rform)
+        {
+            rform.acceptedpercentage = percentage;
+        });
+        if(percentage>=66)
+        {
+          //TODO add functionality here
+        }
+      }
     }
 	
 		//@abi action

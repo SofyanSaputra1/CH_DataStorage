@@ -20,8 +20,9 @@ using std::string;
 class CHVotingContract : public eosio::contract {
   public:
     CHVotingContract(account_name self) : contract(self),
-      research_forms(_self, _self),
-      mp_votes(_self, _self){}
+      researchforms(_self, _self),
+      mpvotes(_self, _self),
+      opteddatasets(_self, _self){}
 	
     //@abi action
     void submitform(account_name researchid, string formdata, uint64_t acceptedpercentage, uint64_t count) {
@@ -39,7 +40,7 @@ class CHVotingContract : public eosio::contract {
     }
 
     //@abi action
-    void vote(account_name mp, account_name researchid, uint64_t stakecoins) {
+    void vote(account_name mp, account_name researchid, uint64_t stakedcoins) {
       // Store new MP
       mpvotes.emplace(_self, [&](auto& mpvote){
           mpvote.mp = mp;
@@ -50,58 +51,41 @@ class CHVotingContract : public eosio::contract {
 
     //@abi action
     void votedeltas(account_name researchid) {
-		auto iterator = mpvotes.find(researchid).begin();
-		uint64_t totalstake;
-		uint64_t yaystake;
-		for(auto it = iterator; it!=iterator.end(); it++)
-		{
-			if(*it.stakedcoins>0)
+			auto iterator = mpvotes.find(researchid);
+			uint64_t totalstake;
+			uint64_t yaystake;
+			for(auto it = iterator; it!=mpvotes.end(); it++)
 			{
-				yaystake+=*it.stakedcoins;
+				if(it->stakedcoins>0)
+				{
+					yaystake+=it->stakedcoins;
+				}
+				totalstake+=it->stakedcoins;
 			}
-			totalstake+=*it.stakedcoins;
-		}
-		uint64_t percentage=(uint64_t)((yaystake*100)/totalstake);
-		auto researchform = researchforms.find(researchid);
-		researchforms.modify(researchform, N(testaccount),[&]( auto& rform)
-		{
-			rform.acceptedpercentage = percentage;
-		});
-		auto researchform = researchforms.find(researchid);
-		researchforms.modify(researchform, N(testaccount),[&]( auto& rform)
-		{
-			rform.acceptedpercentage = percentage;
-		});
-		if(percentage>=66)
-		{
-			//TODO add functionality here
-		}
+			uint64_t percentage=(uint64_t)((yaystake*100)/totalstake);
+			auto researchform = researchforms.find(researchid);
+			researchforms.modify(researchform, N(testaccount),[&]( auto& rform)
+			{
+				rform.acceptedpercentage = percentage;
+			});
+			if(percentage>=66)
+			{
+				//TODO add functionality here
+			}
     }
 	
-	//@abi action
+		//@abi action
     void optin(account_name researchid,string optedhash) {
-		opteddatasets.emplace(_self, [&](auto& optedataset)
-		{
-          opteddataset.researchid = researchid;
-          opteddataset.optedhash = optedhash;
-      	});	
-	}
+			opteddatasets.emplace(_self, [&](auto& opteddataset)
+				{
+							opteddataset.researchid = researchid;
+							opteddataset.optedhash = optedhash;
+						});
+		}
 
   private:
 
-    // BUGBUG Check this
-    bool hasProfile(account_name owner) {
-      auto iterator = profiles.find(owner);
-      return iterator != profiles.end();
-    }
-
-    // BUGBUG Check this
-    bool hasTrustedMp(account_name mp) {
-      auto iterator = medical_providers.find(mp);
-      return iterator != medical_providers.end();
-    }
-
-    //@abi table researchforms i64
+    //@abi table researchform i64
     struct researchform {
         account_name researchid;
 
@@ -116,14 +100,14 @@ class CHVotingContract : public eosio::contract {
         EOSLIB_SERIALIZE( researchform, (researchid)(formdata)(acceptedpercentage)(count) )
     };
 
-    typedef eosio::multi_index< N(researchforms), researchform> research_form_index;
+    typedef eosio::multi_index< N(researchform), researchform> research_form_index;
 
     //@abi table mpvotes i64
     struct mpvotes {
         account_name mp;
         account_name researchid;
 		
-		uint64_t stakedcoins;
+		    uint64_t stakedcoins;
 
         uint64_t primary_key()const { return researchid; }
         uint64_t secondary_key()const { return mp; }
@@ -147,7 +131,7 @@ class CHVotingContract : public eosio::contract {
 	
     research_form_index researchforms;
     mp_votes_index mpvotes;
-	opteddata_index opteddatasets;
+		opteddata_index opteddatasets;
 };
 
-EOSIO_ABI(CHVotingContract,(submitform) (vote) (checkvotedeltas))
+EOSIO_ABI(CHVotingContract,(submitform) (vote) (votedeltas) (optin))
